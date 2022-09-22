@@ -1,0 +1,44 @@
+From: Markus Koschany <apo@debian.org>
+Date: Fri, 27 Oct 2017 14:28:46 +0200
+Subject: privacy breach
+
+Fix various Lintian warnings about privacy breach.
+Forwarded: no
+---
+ RMISecurityManager.html | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/RMISecurityManager.html b/RMISecurityManager.html
+index ada4677..edaceae 100644
+--- a/RMISecurityManager.html
++++ b/RMISecurityManager.html
+@@ -1,9 +1,9 @@
+ <html>
+ <head><title>Yahoo! Mail</title></head>
+-<body alink=#0000ff vlink=#0000ff bgcolor=#ffffff background=http://a1.g.a.yimg.com/7/1/31/000/us.yimg.com/i/mail/nfymbg.gif>
++<body alink=#0000ff vlink=#0000ff bgcolor=#ffffff >
+ <table border=0 width="100%" cellpadding=0 cellspacing=0><tr>
+ <td width="132" align=left valign=top>
+-<map name=m><area coords="0,0,115,60" href="/ym/us/Welcome?YY=82723"><area coords="0,60,65,75" href="http://rd.yahoo.com/mail_us/nav/?http://my.yahoo.com/" target="_blank"><area coords="66,60,116,75" href="http://rd.yahoo.com/mail_us/nav/?http://www.yahoo.com" target="_blank"></map><img src="http://a1.g.a.yimg.com/7/1/31/000/us.yimg.com/i/mail/m3.gif" width=115 height=75 border=0 alt="" usemap="#m">
++<map name=m><area coords="0,0,115,60" href="/ym/us/Welcome?YY=82723"><area coords="0,60,65,75" href="http://rd.yahoo.com/mail_us/nav/?http://my.yahoo.com/" target="_blank"><area coords="66,60,116,75" href="http://rd.yahoo.com/mail_us/nav/?http://www.yahoo.com" target="_blank"></map><img src="" width=115 height=75 border=0 alt="" usemap="#m">
+ <table border=0 cellpadding=0 cellspacing=0 width="100%">
+ <tr><td nowrap><font face="Arial,Helvetica" size=-1>&nbsp;<a href="/ym/us/ShowFolder?rb=Inbox&YY=82723&order=down&sort=date&pos=0&YN=1">Check Mail</a></font></td></tr>
+ <tr><td nowrap><font face="Arial,Helvetica" size=-1>&nbsp;<a href="/ym/us/Compose?YY=82723&order=down&sort=date&pos=0">Compose</a></font></td></tr>
+@@ -15,7 +15,7 @@
+ <tr><td nowrap><font face="Arial,Helvetica" size=-1>&nbsp;<a href="/ym/us/Logout?YY=82723">Sign Out</a></font></td></tr>
+ <tr><td nowrap>&nbsp;<br></td></tr>
+ <tr><td nowrap>
+-<P><table cellspacing=0 border=0 cellpadding=0><tr><td><a href="http://rd.yahoo.com/M=44900.428155.2175333.317188/P=m1v2ekd4110004/S=150500021:SW/A=182063/R=0/*http://www.jfax.com/visitjfax.asp?VID=3-41&BID=224-1031-196a&page=splashpages/yahoo/YFreeTrial.html" target="_blank"><img src="http://a32.g.a.yimg.com/7/32/31/000/us.yimg.com/a/jf/jfax/44900/196a031.gif" width=25 height=25 border=0></a></td><td><a href="http://rd.yahoo.com/M=44900.428155.2175333.317188/P=m1v2ekd4110004/S=150500021:SW/A=182063/R=1/*http://www.jfax.com/visitjfax.asp?VID=3-41&BID=224-1031-196a&page=splashpages/yahoo/YFreeTrial.html" target="_blank"><font size=2>Faxes<br>Voicemail</font></a></td></tr></table><P></td></tr>
++<P><table cellspacing=0 border=0 cellpadding=0><tr><td><a href="http://rd.yahoo.com/M=44900.428155.2175333.317188/P=m1v2ekd4110004/S=150500021:SW/A=182063/R=0/*http://www.jfax.com/visitjfax.asp?VID=3-41&BID=224-1031-196a&page=splashpages/yahoo/YFreeTrial.html" target="_blank"></a></td><td><a href="http://rd.yahoo.com/M=44900.428155.2175333.317188/P=m1v2ekd4110004/S=150500021:SW/A=182063/R=1/*http://www.jfax.com/visitjfax.asp?VID=3-41&BID=224-1031-196a&page=splashpages/yahoo/YFreeTrial.html" target="_blank"><font size=2>Faxes<br>Voicemail</font></a></td></tr></table><P></td></tr>
+ 
+ 
+ <tr><td height=5></td></tr>
+@@ -44,8 +44,6 @@ Help</a>
+ </tr>
+ 
+ <tr><td align=center colspan=2>
+-<table cellpadding=8><tr><td align=center>
+-<a href="http://rd.yahoo.com/M=27229.509820.2255446.394561/P=m1v2ekd4110004/S=150500004:N/A=213422/?http://ad.doubleclick.net/jump/N483.1stusa.yahoo/B5014.29;sz=468x60;cell=6je8;ord=944588611" target="_blank"><img width=468 height=60 src="http://ad.doubleclick.net/ad/N483.1stusa.yahoo/B5014.29;sz=468x60;cell=6je8;ord=944588611" alt="Click Here for Wingspanbank.com" border=0></a></td></tr></table>
+ <hr width="100%" noshade size=1>
+ </td></tr>
+ 

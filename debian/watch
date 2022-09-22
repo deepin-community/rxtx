@@ -1,0 +1,4 @@
+# format version number, currently 3; this line is compulsory!
+version=3
+opts=dversionmangle=s/(\da?)[\+\.\-~](?:dfsg|debian|ds|repack|repacked)\.?\d*$/$1/ \
+http://rxtx.qbang.org/pub/rxtx/rxtx-([0-9].*[0-9])\.zip

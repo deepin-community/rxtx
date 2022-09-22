@@ -1,0 +1,28 @@
+Description: Fixes the build failure with Java 10
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: no
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -111,11 +111,6 @@
+ $(CLASSES): $(javafiles) $(TOP)/Makefile
+ 	$(JAVAH_FIX)
+ 	$(JAVAC) $(javafiles)
+-	$(JAVAH) `(for i in $(javahfiles);do \
+-		if grep > /dev/null native.*\( $(SPATH)/gnu/io/$$i.java; then \
+-			echo $(CLASSDIR).$$i; \
+-		fi; \
+-	done)`
+ 	$(JAR) cf $(JARTARGET) $(CLASSTOP)/*
+ 
+ #  install librxtxSerial.so into the proper directory and copy $(JARTARGET) to its
+--- a/configure.in
++++ b/configure.in
+@@ -485,7 +485,7 @@
+ 	*)
+ 		find_java_native_include jni_md.h
+ 		JAVAH="\$(JPATH)/bin/javah -classpath \$(CLASSPATH) -d \$(DEST) -jni"
+-		JAVAC="\$(JPATH)/bin/javac -classpath \$(CLASSPATH) -d \$(TOP)/ -O -source 1.3 -target 1.3"
++		JAVAC="\$(JPATH)/bin/javac -classpath \$(CLASSPATH) -d \$(TOP)/ -O -source 1.8 -target 1.8 -h \$(DEST)"
+ 		JAR="\$(JPATH)/bin/jar"
+ 		JAVADOC="\$(JPATH)/bin/javadoc"
+ 		CFLAGS=$CFLAGS" -D_BSD_SOURCE"
