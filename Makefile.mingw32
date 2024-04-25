@@ -89,9 +89,6 @@ LIBINSTALL="$(JDKHOME)\jre\bin"
 # path to the mingw32 libraries (directory with libmingw32.a) DOS style path
 LIBDIR="$(MINGHOME)\lib"
 
-# path to the junit library. Only needed for running the tests.
-JUNIT_JAR=D:\Apps\junit3.8.2\junit.jar
-
 ######################
 #  End of user defined variables
 ######################
@@ -109,11 +106,10 @@ DLLTOOL=dlltool
 DLLWRAP=dllwrap
 
 CLASSPATH=-classpath ".;C:\jdk13\lib\RXTXcomm.jar;c:\BlackBox.jar;$(JDKHOME)\lib\classes.zip;$(JDKHOME)\jre\lib\rt.jar"
-JAVAH=$(JDKHOME)\bin\javah
-JAR=$(JDKHOME)\bin\jar 
-JAVAC=$(JDKHOME)\bin\javac -source 1.2 -target 1.2 -g
-#JAVAC=$(JDKHOME)\bin\javac -g
-JAVA=$(JDKHOME)\bin\java -ea -esa
+JAVAH=javah $(CLASSPATH)
+JAR=jar 
+JAVAC=$(JDKHOME)\bin\javac -source 1.2 -target 1.2 -g $(CLASSPATH)
+#JAVAC=$(JDKHOME)\bin\javac -g $(CLASSPATH)
 
 ######################
 #  Tool Flags
@@ -130,7 +126,6 @@ LIBS=-L . -L $(LIBDIR) -LC:/tmp/rxtx5/build -luser32 -lgdi32 -lcomdlg32 -lkernel
 JDKINCLUDE=$(JDKHOME)/include
 MINGINCLUDE=$(MINGHOME)/include
 JAVAFILES = $(wildcard $(SRC)/gnu/io/*.java)
-TESTFILES = $(wildcard $(SRC)/../tests/gnu/io/rxtx/tests/*.java)
 CFILES=$(wildcard $(SRC)/*.c) $(wildcard $(SRC)/*.cc)
 TARGETLIBS= rxtxSerial.dll rxtxParallel.dll
 #TARGETLIBS= rxtxSerial.dll rxtxParallel.dll rxtxZystem.dll
@@ -154,13 +149,13 @@ fixup.o: $(SRC)/fixup.c
 #ZystemImp.o:  config.h
 #	$(CC) $(CFLAGS_CYGWIN) -c $(SRC)/ZystemImp.c -o ZystemImp.o
 
-SerialImp.o: $(SRC)/SerialImp.c $(SRC)/SerialImp.h $(SRC)/win32termios.h config.h gnu_io_RXTXPort.h
+SerialImp.o: $(SRC)/SerialImp.c $(SRC)/SerialImp.h config.h gnu_io_RXTXPort.h
 	$(CC) $(CFLAGS) -c $(SRC)/SerialImp.c -o SerialImp.o
 
 fuserImp.o: $(SRC)/fuserImp.c config.h gnu_io_CommPortIdentifier.h
 	$(CC) $(CFLAGS) -c $(SRC)/fuserImp.c -o fuserImp.o
 
-termios.o: $(SRC)/termios.c $(SRC)/win32termios.h config.h
+termios.o: $(SRC)/termios.c
 	$(CC) $(CFLAGS) -c $(SRC)/$*.c -o termios.o
 
 ParallelImp.o: $(SRC)/ParallelImp.c $(SRC)/ParallelImp.h $(SRC)/win32termios.h config.h gnu_io_LPRPort.h
@@ -180,10 +175,10 @@ rxtxParallel.dll: $(PARALLELOBJECTS)
 	gcc -mno-cygwin -shared -o $@ $(PARALLELOBJECTS) -lmingw32 -Wl,--kill-at
 
 gnu_io_RXTXPort.h gnu_io_CommPortIdentifier.h gnu_io_LPRPort.h gnu_io_RXTXVersion.h: RXTXcomm.jar
-	$(JAVAH) $(CLASSPATH) -jni gnu.io.RXTXPort gnu.io.CommPortIdentifier gnu.io.LPRPort gnu.io.RXTXVersion
+	$(JAVAH) -jni gnu.io.RXTXPort gnu.io.CommPortIdentifier gnu.io.LPRPort gnu.io.RXTXVersion
 
 RXTXcomm.jar: $(JAVAFILES)
-	$(JAVAC) $(CLASSPATH) -d . $(JAVAFILES)
+	$(JAVAC) -d . $(JAVAFILES)
 	$(JAR) -cf RXTXcomm.jar gnu
 
 config.h: Makefile
@@ -193,14 +188,6 @@ config.h: Makefile
 	echo "#define HAVE_SYS_FILE_H 1" >> config.h
 	echo "#undef HAVE_SYS_SIGNAL_H" >> config.h
 	echo "#undef HAVE_TERMIOS_H" >> config.h
-
-testcp\stamp: RXTXcomm.jar $(TESTFILES)
-	-mkdir testcp
-	$(JAVAC) -classpath RXTXcomm.jar;$(JUNIT_JAR) -d testcp $(TESTFILES)
-	echo > testcp\stamp
-
-tests: all testcp\stamp
-	$(JAVA) -classpath RXTXcomm.jar;testcp;$(JUNIT_JAR) gnu.io.rxtx.tests.RXTXTestSuite
 
 install: all
 	xcopy /Y RXTXcomm.jar $(COMMINSTALL)
@@ -214,5 +201,4 @@ uninstall:
 
 clean:
 	-rmdir /s /q gnu
-	-rmdir /s /q testcp
 	-del /Q *.o RXTXcomm.jar rxtxSerial.dll rxtxParallel.dll config.h gnu_io_*.h

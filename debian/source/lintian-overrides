@@ -1,0 +1,5 @@
+# upstream ships HTML files with long lines
+rxtx: source-is-missing [RMISecurityManager.html]
+rxtx: source-is-missing [contrib/MAcOSX/RXTXInstaller/Sources/gnu/io/installer/resources/macosx/artistic-license.html]
+rxtx: source-is-missing [contrib/MAcOSX/RXTXInstaller/jnlp/artistic-license.html]
+

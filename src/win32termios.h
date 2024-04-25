@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
 |   RXTX License v 2.1 - LGPL v 2.1 + Linking Over Controlled Interface.
 |   RXTX is a native interface to serial ports in java.
-|   Copyright 1997-2009 by Trent Jarvi tjarvi@qbang.org and others who
+|   Copyright 1997-2008 by Trent Jarvi tjarvi@qbang.org and others who
 |   actually wrote it.  See individual source files for more information.
 |
 |   A copy of the LGPL v 2.1 may be found at
@@ -67,7 +67,6 @@
 #define ENTER(x)
 #define LEAVE(x)
 #endif /* TRACE */
-#if defined(_MSC_VER)
 #define YACK() \
 { \
 	char *allocTextBuf, message[80]; \
@@ -82,33 +81,12 @@
 		(LPSTR)&allocTextBuf, \
 		16, \
 		NULL ); \
-	_snprintf_s( message, 80, 80, "Error 0x%x at %s(%d): %s\n", errorCode, __FILE__, __LINE__, allocTextBuf); \
+	sprintf( message, "Error 0x%x at %s(%d): %s\n", errorCode, __FILE__, __LINE__, allocTextBuf); \
 	report_error( message ); \
 	LocalFree(allocTextBuf); \
 	Sleep(1); \
 }
-#else
 
-#define YACK() \
-{ \
-	char *allocTextBuf, message[80]; \
-	unsigned long nChars; \
-	unsigned int errorCode = GetLastError(); \
-	nChars = FormatMessage ( \
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | \
-		FORMAT_MESSAGE_FROM_SYSTEM, \
-		NULL, \
-		errorCode, \
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), \
-		(LPSTR)&allocTextBuf, \
-		16, \
-		NULL ); \
-	snprintf( message, 80, "Error 0x%x at %s(%d): %s\n", errorCode, __FILE__, __LINE__, allocTextBuf); \
-	report_error( message ); \
-	LocalFree(allocTextBuf); \
-	Sleep(1); \
-}
-#endif
 typedef unsigned char   cc_t;
 typedef unsigned int    speed_t;
 typedef unsigned int    tcflag_t;
@@ -191,7 +169,7 @@ int serial_select(int, struct fd_set *, struct fd_set *, struct fd_set *, struct
 void termios_interrupt_event_loop( int , int );
 void termios_setflags( int , int[] );
 struct termios_list *find_port( int );
-void usleep(unsigned long usec);
+/* void usleep(unsigned long usec); */
 int fcntl(int fd, int command, ...);
 const char *get_dos_port(const char *);
 void set_errno(int);
