@@ -8,7 +8,6 @@ override_dh_auto_install:
 
 override_dh_auto_build:
 	$(MAKE) RXTX_PATH=/usr/lib/jni
-	$(MAKE) docs
 
 override_dh_install:
 	find . -name *.la -delete
@@ -16,4 +15,3 @@ override_dh_install:
 
 override_dh_installchangelogs:
 	dh_installchangelogs ChangeLog
-
